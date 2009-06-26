@@ -43,6 +43,17 @@ module CouchRest
         CouchRest.get url
       end
     end
+
+    # Query the <tt>_all_docs_by_seq</tt> view. Accepts all the same arguments as view.
+		def documents_by_sequence(params = {})
+      keys = params.delete(:keys)
+      url = CouchRest.paramify_url "#{@uri}/_all_docs_by_seq", params
+      if keys
+        CouchRest.post(url, {:keys => keys})
+      else
+        CouchRest.get url
+      end
+		end
   
     # load a set of documents by passing an array of ids
     def get_bulk(ids)
